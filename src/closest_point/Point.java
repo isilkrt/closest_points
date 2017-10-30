@@ -11,7 +11,6 @@ import java.text.NumberFormat;
  */
 public class Point /*implements Comparable<Point>*/{
 
-
 	/**Keep order of point in point list.
 	 * @HasGetter
 	 * @HasSetter
@@ -24,18 +23,15 @@ public class Point /*implements Comparable<Point>*/{
 	 */
 	private int dimension;
 
-
 	/**List to keep coordinates of points
 	 */
 	private Float[] coordinates;
-
 
 	/**
 	 * Class constructor.
 	 */
 	Point(){
 	}
-
 
 	/**Class constructor with three parameters.
 	 * @param order - point order in point list
@@ -72,7 +68,6 @@ public class Point /*implements Comparable<Point>*/{
 		this.dimension = dimension;
 	}
 
-
 	/**
 	 * @return String to write points axis values.
 	 */
@@ -80,8 +75,6 @@ public class Point /*implements Comparable<Point>*/{
 		DecimalFormat df = new DecimalFormat("#");
 		df.setMaximumIntegerDigits(6);
 		df.setMaximumFractionDigits(1);
-	    //df.setMinimumFractionDigits(0);
-
 		String write = this.order + ":";
 		for(int i = 0;i<dimension ; i++){
 
@@ -89,5 +82,4 @@ public class Point /*implements Comparable<Point>*/{
 		}
 		return write;
 	}
-
 }

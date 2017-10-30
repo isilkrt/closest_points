@@ -11,7 +11,6 @@ public class Distance {
 	 */
 	private float distance;	//distance between two points.
 
-
 	/** First point object is regarded
 	 * @HasGetter
 	 * @HasSetter
@@ -27,7 +26,6 @@ public class Distance {
 	/**Class constructor.
 	 */
 	Distance(){
-
 	}
 
 	/**Class constructor with two points as parameters.
@@ -39,7 +37,6 @@ public class Distance {
 		this.b = b;
 		this.distance = cal_distance(a,b);
 	}
-
 
 	/**Class constructor with two points and one distance as parameters.
 	 * @param distance
@@ -82,18 +79,15 @@ public class Distance {
 	 * @return distance
 	 */
 	public float cal_distance(Point a, Point b){
-		//Distance m = new Distance();
-		//m.setA(a);
-		//m.setB(b);
-		int dim = a.getDimension();	// dimension of point
-		float distance = 0;	//keep square of distance between points
+
+		int dim = a.getDimension();	      // dimension of point
+		float distance = 0;	              //keep square of distance between points
 		for(int i = 0; i < dim; i++){
 			float result = Math.abs(a.getCoordinates()[i] - b.getCoordinates()[i]);
 			result = result * result;
 			distance = distance + result;
 		}
 		distance = (float) Math.sqrt(distance);
-		//m.setDistance(count);
 		return distance;
 	}
 
@@ -103,12 +97,10 @@ public class Distance {
 	 */
 	public Distance distance_min_distance(Distance a){
 		float min = Math.min(a.getDistance(), this.getDistance());	//min distance
-		//min = Math.min(distance_object.getDistance(), dis3.getDistance());
 		if(min == a.getDistance()){
 			return a;
 		}else{
 			return this;
 		}
 	}
-
 }

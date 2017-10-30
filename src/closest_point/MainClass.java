@@ -19,9 +19,9 @@ import java.util.List;
  */
 public class MainClass {
 
-	final long startTime = System.nanoTime();
-
 	public static Distance finald = new Distance();	//
+	public static int dimension;
+	public static int numberOfPoints;
 
 	/**Main method.
 	 * Takes Argument and run main function.
@@ -37,7 +37,7 @@ public class MainClass {
 
 		final long duration = System.nanoTime() - startTime; 	//keep end time of system.
 		System.out.print("Run time of system : ");
-		System.out.print( (float) duration / 1000000);
+		System.out.print( (float) duration / 1000000 );
 		System.out.print(" milliseconds.");
 
 	}
@@ -50,21 +50,21 @@ public class MainClass {
 	 */
 	public static void runFunction(String filename) throws Exception{
 
-		String[] tokens = filename.split("_");						//filename tokens
-		int dimension = Integer.parseInt(tokens[2]);				//dimension of points
+		String[] tokens = filename.split("_");								//filename tokens
+		int dimension = Integer.parseInt(tokens[2]);					//dimension of points
 		int numberOfPoints = Integer.parseInt(tokens[3]);			//number of points
 
 		Point [] point_list = new Point[numberOfPoints];			// point list keeps all points.
-		point_list = readFile(dimension, numberOfPoints, filename);	//get points from input file
+		point_list = readFile(filename);											//get points from input file
 
-		finald.setDistance(Float.MAX_VALUE);						//sets minimum distance as maximum float  number.
-        finald = divide_conquer(point_list, 0, dimension);			//run divide_conquer function
+		finald.setDistance(Float.MAX_VALUE);									//sets minimum distance as maximum float  number.
+		finald = divide_conquer(point_list, 0);						//run divide_conquer function
 
-        try{
-        	writeFile(dimension, numberOfPoints);					//write final minimum point to output file
-        }finally{
-
-        }
+		try{
+			writeFile();																		//write final minimum point to output file
+		}finally{
+			
+		}
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class MainClass {
 	 * @param dimension	- dimensions of points.
 	 * @return Final Distance object that has minimum distance of points.
 	 */
-	public static Distance divide_conquer(Point [] point_list, int axis, int dimension){
+	public static Distance divide_conquer(Point [] point_list, int axis){
 
 		if(point_list.length <2){
 
@@ -91,9 +91,9 @@ public class MainClass {
 				 * In this condition, there are three different distance object
 				 * We should find Distance object that has minimum distance
 				 */
-				Distance dis2 = new Distance(point_list[1], point_list[2]); 	//other distance
-				Distance dis3 = new Distance(point_list[0], point_list[2]); 	//other distance
-				dis2 = dis2.distance_min_distance(dis3);						//find Distance with minimum distance.
+				Distance dis2 = new Distance(point_list[1], point_list[2]); 		//other distance
+				Distance dis3 = new Distance(point_list[0], point_list[2]); 		//other distance
+				dis2 = dis2.distance_min_distance(dis3);												//find Distance with minimum distance.
 				distance_object = distance_object.distance_min_distance(dis3); 	//find final Distance with minimum distance.
 				return distance_object;
 
@@ -116,13 +116,13 @@ public class MainClass {
 			 */
 			java.util.Arrays.sort(point_list, java.util.Comparator.comparingDouble(a -> a.getCoordinates()[axis]));
 
-			int length = point_list.length;						//length of point list.
+			int length = point_list.length;									//length of point list.
 			Point [] left_side = new Point [length/2];			//create a new list which size is equal to half of main point list
 			int a = length/2;
 			if(length%2 != 0 ){
 				a ++;
 			}
-			Point [] right_side  = new Point [a]; 				//create a new list which size is equal to size(point list) - size(left_size)
+			Point [] right_side  = new Point [a]; 					//create a new list which size is equal to size(point list) - size(left_size)
 
 			// dividing point list. left_side and right_side
 			for(int i = 0; i<length/2;i++){
@@ -132,8 +132,8 @@ public class MainClass {
 				right_side[i-length/2] = point_list[i];
 			}
 
-			Distance first_min = divide_conquer(left_side, axis, dimension);
-			Distance sec_min =  divide_conquer(right_side, axis, dimension);
+			Distance first_min = divide_conquer(left_side, axis);
+			Distance sec_min =  divide_conquer(right_side, axis);
 			Distance min_divide_part = first_min.distance_min_distance(sec_min);
 
 			float divide_distance = min_divide_part.getDistance();
@@ -173,8 +173,7 @@ public class MainClass {
 				int size = conquer_poins.length;	//length of point list
 
 				/* for every point, search closest point.
-				 * In this step, search only fixed number of points.
-				 */
+				 * In this step, search only fixed number of points. */
 				for(int p = 0; p<size ; p++){
 					int number_point = (int) Math.pow(2,dimension+1) - 1; 	//number of points that are searched
 
@@ -192,6 +191,7 @@ public class MainClass {
 
 						float closeness = cc.getDistance();
 						finald_distance = finald.getDistance();
+
 						if(finald_distance > closeness){
 
 							// new distance is smaller than old.
@@ -203,7 +203,7 @@ public class MainClass {
 
 				// dimension - axis bigger than 2.
 				// Change dimension and call divide conquer algorithm for new list.
-				Distance space_min = divide_conquer(conquer_poins, axis+1, dimension);
+				Distance space_min = divide_conquer(conquer_poins, axis+1);
 
 				float closeness = space_min.getDistance();
 				finald_distance = finald.getDistance();
@@ -223,33 +223,38 @@ public class MainClass {
 	 * @return point_list - List of Points
 	 * @throws Exception
 	 */
-	public static Point[] readFile(int dimension, int numberOfPoints, String filename) throws Exception{
+	public static Point[] readFile(String filename) throws Exception{
 
 		BufferedReader inputFile = new BufferedReader(new FileReader("./input/"+filename+".tsv"));
 
 		String line = inputFile.readLine();
+		List<Point> point_list = new ArrayList<Point>();
 
-		Point[] point_list = new Point[numberOfPoints];
-
-		int order = 0; //order of input points
+		int order = 0; 																				//order of input points
 		while (line != null){
 
-			String[] listOfDimention = line.split("\t");
+			String[] listOfDimension = line.split("\t");
+			dimension = listOfDimension.length;
 			Float[] float_dimensions = new Float[dimension];  	// dimension values of point
 
-			int count = 0;	// axis - 0 mean x axis
-			for (String num: listOfDimention) {
+			int count = 0;																			// axis - 0 mean x axis
+			for (String num: listOfDimension) {
 				float_dimensions[count] = Float.parseFloat(num);
 				count ++;
 			}
 
 			Point new_point = new Point(order+1, dimension, float_dimensions); // create new point with arguments
-			point_list[order] = new_point; // adding to point list
+			point_list.add(new_point);
+
 			order++;	//increase order for following point
 			line = inputFile.readLine();
 		}
+		numberOfPoints = point_list.size();
+		Point[] points = new Point[numberOfPoints];
+		points = point_list.toArray(points);
+
 		inputFile.close();
-		return point_list;
+		return points;
 	}
 
 	/**
@@ -259,7 +264,7 @@ public class MainClass {
 	 * @throws IOException
 	 * @throws UnsupportedEncodingException
 	 */
-	public static void writeFile(int dim, int number) throws IOException, UnsupportedEncodingException{
+	public static void writeFile() throws IOException, UnsupportedEncodingException{
 
 		if(finald==null){
 			System.out.println("There are not enough point. Zero or one.");
@@ -268,24 +273,29 @@ public class MainClass {
 			df.setMaximumIntegerDigits(6);
 
 			//process to write output file
-			String file = "sample_output_" + dim +"_" + number + ".txt" ;
+			String file = "sample_output_" + dimension +"_" + numberOfPoints + ".txt" ;
 			PrintWriter writer = new PrintWriter(file, "UTF-8");
+
+			if(finald.getA().getOrder() > finald.getB().getOrder()){
+				Point temp = finald.getA();
+				finald.setA(finald.getB());
+				finald.setB(temp);
+			}
 
 			writer.print(finald.getA().getOrder());
 			writer.print(":");
-			for(int i = 0; i<dim; i++){
+			for(int i = 0; i<dimension; i++){
 				writer.print(df.format(finald.getA().getCoordinates()[i]) + "\t");
 			}
 
 			writer.println();
 			writer.print(finald.getB().getOrder());
 			writer.print(":");
-			for(int i = 0; i<dim; i++){
+			for(int i = 0; i<dimension; i++){
 				writer.print(df.format(finald.getB().getCoordinates()[i]) + "\t");
 			}
 
 			writer.close();
 		}
 	}
-
 }
