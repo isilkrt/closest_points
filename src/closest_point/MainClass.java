@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * MainClass.java
- *
  * @author isil kurt
  * @version v1.0
  * 30.10.2017
@@ -37,7 +36,7 @@ public class MainClass {
 
 		final long duration = System.nanoTime() - startTime; 	//keep end time of system.
 		System.out.print("Run time of system : ");
-		System.out.print( (float) duration / 1000000 );
+		System.out.print( (float) duration / 1000000);
 		System.out.print(" milliseconds.");
 
 	}
@@ -50,21 +49,19 @@ public class MainClass {
 	 */
 	public static void runFunction(String filename) throws Exception{
 
-		String[] tokens = filename.split("_");								//filename tokens
-		int dimension = Integer.parseInt(tokens[2]);					//dimension of points
-		int numberOfPoints = Integer.parseInt(tokens[3]);			//number of points
+		List<Point> point = new ArrayList<Point>();			// point list keeps all points.
+		point = readFile(filename);	//get points from input file
 
-		Point [] point_list = new Point[numberOfPoints];			// point list keeps all points.
-		point_list = readFile(filename);											//get points from input file
+		Point[] point_list = new Point[numberOfPoints];
+		point_list = point.toArray(point_list);
 
-		finald.setDistance(Float.MAX_VALUE);									//sets minimum distance as maximum float  number.
-		finald = divide_conquer(point_list, 0);						//run divide_conquer function
+		finald.setDistance(Float.MAX_VALUE);			//sets minimum distance as maximum float  number.
+        finald = divide_conquer(point_list, 0);			//run divide_conquer function
 
-		try{
-			writeFile();																		//write final minimum point to output file
-		}finally{
-			
-		}
+        try{
+        	writeFile();					//write final minimum point to output file
+        }finally{
+        }
 	}
 
 	/**
@@ -91,9 +88,9 @@ public class MainClass {
 				 * In this condition, there are three different distance object
 				 * We should find Distance object that has minimum distance
 				 */
-				Distance dis2 = new Distance(point_list[1], point_list[2]); 		//other distance
-				Distance dis3 = new Distance(point_list[0], point_list[2]); 		//other distance
-				dis2 = dis2.distance_min_distance(dis3);												//find Distance with minimum distance.
+				Distance dis2 = new Distance(point_list[1], point_list[2]); 	//other distance
+				Distance dis3 = new Distance(point_list[0], point_list[2]); 	//other distance
+				dis2 = dis2.distance_min_distance(dis3);						//find Distance with minimum distance.
 				distance_object = distance_object.distance_min_distance(dis3); 	//find final Distance with minimum distance.
 				return distance_object;
 
@@ -116,13 +113,13 @@ public class MainClass {
 			 */
 			java.util.Arrays.sort(point_list, java.util.Comparator.comparingDouble(a -> a.getCoordinates()[axis]));
 
-			int length = point_list.length;									//length of point list.
-			Point [] left_side = new Point [length/2];			//create a new list which size is equal to half of main point list
+			int length = point_list.length;		//length of point list.
+			Point [] left_side = new Point [length/2];		//create a new list which size is equal to half of main point list
 			int a = length/2;
 			if(length%2 != 0 ){
 				a ++;
 			}
-			Point [] right_side  = new Point [a]; 					//create a new list which size is equal to size(point list) - size(left_size)
+			Point [] right_side  = new Point [a]; 	//create a new list which size is equal to size(point list) - size(left_size)
 
 			// dividing point list. left_side and right_side
 			for(int i = 0; i<length/2;i++){
@@ -168,7 +165,6 @@ public class MainClass {
 			 * If dimension - axis is smaller than 3, we can find minimum distance between point.
 			 * If not, we should change axis and run divide conquer algorithm again for point list.
 			 */
-
 			if(dimension - axis < 3){
 				int size = conquer_poins.length;	//length of point list
 
@@ -178,7 +174,7 @@ public class MainClass {
 					int number_point = (int) Math.pow(2,dimension+1) - 1; 	//number of points that are searched
 
 					if(size < number_point){
-
+						
 						//if there is not enough point, change number_point to look
 						number_point = size;
 					}
@@ -223,21 +219,21 @@ public class MainClass {
 	 * @return point_list - List of Points
 	 * @throws Exception
 	 */
-	public static Point[] readFile(String filename) throws Exception{
+	public static List<Point> readFile(String filename) throws Exception{
 
 		BufferedReader inputFile = new BufferedReader(new FileReader("./input/"+filename+".tsv"));
 
 		String line = inputFile.readLine();
 		List<Point> point_list = new ArrayList<Point>();
 
-		int order = 0; 																				//order of input points
+		int order = 0; //order of input points
 		while (line != null){
 
 			String[] listOfDimension = line.split("\t");
 			dimension = listOfDimension.length;
 			Float[] float_dimensions = new Float[dimension];  	// dimension values of point
 
-			int count = 0;																			// axis - 0 mean x axis
+			int count = 0;	// axis - 0 mean x axis
 			for (String num: listOfDimension) {
 				float_dimensions[count] = Float.parseFloat(num);
 				count ++;
@@ -250,11 +246,8 @@ public class MainClass {
 			line = inputFile.readLine();
 		}
 		numberOfPoints = point_list.size();
-		Point[] points = new Point[numberOfPoints];
-		points = point_list.toArray(points);
-
 		inputFile.close();
-		return points;
+		return point_list;
 	}
 
 	/**
