@@ -7,7 +7,6 @@ public class Distance {
 	private Point b;
 
 	Distance(){
-
 	}
 	Distance(Point a, Point b){
 		this.a = a;
