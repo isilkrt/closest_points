@@ -12,23 +12,20 @@ import java.text.NumberFormat;
 public class Point /*implements Comparable<Point>*/{
 
 
-	/**
-	 * Keep order of point in point list.
+	/**Keep order of point in point list.
 	 * @HasGetter
 	 * @HasSetter
 	 */
 	private int order;
 
-	/**
-	 * Keep dimension of point.
+	/**Keep dimension of point.
 	 * @HasGetter
 	 * @HasSetter
 	 */
 	private int dimension;
 
 
-	/**
-	 * List to keep coordinates of points
+	/**List to keep coordinates of points
 	 */
 	private Float[] coordinates;
 
@@ -40,8 +37,7 @@ public class Point /*implements Comparable<Point>*/{
 	}
 
 
-	/**
-	 * Class constructor with three parameters.
+	/**Class constructor with three parameters.
 	 * @param order - point order in point list
 	 * @param dimension - point dimension
 	 * @param coordinates - keep values of axes

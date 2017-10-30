@@ -5,39 +5,32 @@ package closest_point;
  */
 public class Distance {
 
-
-	/**
-	 * Distance from two point. (square of distance is not necessary)
+	/**Distance from two point.
 	 * @HasGetter
 	 * @HasSetter
 	 */
 	private float distance;	//distance between two points.
 
 
-	/**
-	 * First point object is regarded
+	/** First point object is regarded
 	 * @HasGetter
 	 * @HasSetter
 	 */
 	private Point a;	//First point
 
-	/**
-	 * Second point object is regarded
+	/**Second point object is regarded
 	 * @HasGetter
 	 * @HasSetter
 	 */
 	private Point b;	//Second point
 
-
-	/**
-	 * Class constructor.
+	/**Class constructor.
 	 */
 	Distance(){
 
 	}
 
-	/**
-	 * Class constructor with two points as parameters.
+	/**Class constructor with two points as parameters.
 	 * @param a - First Point
 	 * @param b - Second Point
 	 */
@@ -48,8 +41,7 @@ public class Distance {
 	}
 
 
-	/**
-	 * Class constructor with two points and one distance as parameters.
+	/**Class constructor with two points and one distance as parameters.
 	 * @param distance
 	 * @param a
 	 * @param b
@@ -59,8 +51,6 @@ public class Distance {
 		this.a = a;
 		this.b = b;
 	}
-
-
 
 	public float getDistance() {
 		return distance;
@@ -86,8 +76,7 @@ public class Distance {
 		this.b = b;
 	}
 
-	/**
-	 * calculate distance between two Points.
+	/**calculate distance between two Points.
 	 * @param a - first point
 	 * @param b - second point
 	 * @return distance
@@ -103,12 +92,12 @@ public class Distance {
 			result = result * result;
 			distance = distance + result;
 		}
+		distance = (float) Math.sqrt(distance);
 		//m.setDistance(count);
 		return distance;
 	}
 
-	/**
-	 * Find Distance objecct has smaller distance variable than other.
+	/**Find Distance objecct has smaller distance variable than other.
 	 * @param a - Distance object
 	 * @return Distance object that has smaller distance
 	 */
