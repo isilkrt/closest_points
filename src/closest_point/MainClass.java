@@ -262,8 +262,10 @@ public class MainClass {
 		if(finald==null){
 			System.out.println("There are not enough point. Zero or one.");
 		}else{
-			DecimalFormat df = new DecimalFormat("#");
 			df.setMaximumIntegerDigits(6);
+			df.setMinimumIntegerDigits(1);
+			df.setMaximumFractionDigits(1);
+			df.setGroupingSize(6);
 
 			//process to write output file
 			String file = "sample_output_" + dimension +"_" + numberOfPoints + ".txt" ;
@@ -278,16 +280,16 @@ public class MainClass {
 			writer.print(finald.getA().getOrder());
 			writer.print(":");
 			for(int i = 0; i<dimension; i++){
-				String tab = String.format("%-6.6g", finald.getA().getCoordinates()[i]);
-				writer.print(tab + "\t");
+				String h = df.format(finald.getA().getCoordinates()[i]).replace(',', '.');
+				writer.print(h + "\t");
 			}
 
 			writer.println();
 			writer.print(finald.getB().getOrder());
 			writer.print(":");
 			for(int i = 0; i<dimension; i++){
-				String tab = String.format("%-6.6g", finald.getB().getCoordinates()[i]);
-				writer.print(tab + "\t");
+				String h = df.format(finald.getB().getCoordinates()[i]).replace(',', '.');
+				writer.print(h + "\t");
 			}
 
 			writer.close();
