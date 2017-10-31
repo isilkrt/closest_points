@@ -36,7 +36,7 @@ public class MainClass {
 
 		final long duration = System.nanoTime() - startTime; 	//keep end time of system.
 		System.out.print("Run time of system : ");
-		System.out.print( (float) duration / 1000000);
+		System.out.print( (float) duration / 1000000 );
 		System.out.print(" milliseconds.");
 
 	}
@@ -174,7 +174,7 @@ public class MainClass {
 					int number_point = (int) Math.pow(2,dimension+1) - 1; 	//number of points that are searched
 
 					if(size < number_point){
-						
+
 						//if there is not enough point, change number_point to look
 						number_point = size;
 					}
@@ -278,14 +278,16 @@ public class MainClass {
 			writer.print(finald.getA().getOrder());
 			writer.print(":");
 			for(int i = 0; i<dimension; i++){
-				writer.print(df.format(finald.getA().getCoordinates()[i]) + "\t");
+				String tab = String.format("%-6.6g", finald.getA().getCoordinates()[i]);
+				writer.print(tab + "\t");
 			}
 
 			writer.println();
 			writer.print(finald.getB().getOrder());
 			writer.print(":");
 			for(int i = 0; i<dimension; i++){
-				writer.print(df.format(finald.getB().getCoordinates()[i]) + "\t");
+				String tab = String.format("%-6.6g", finald.getB().getCoordinates()[i]);
+				writer.print(tab + "\t");
 			}
 
 			writer.close();
