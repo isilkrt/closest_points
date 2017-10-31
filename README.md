@@ -21,6 +21,7 @@
 * Output file includes line numbers and coordinates closest pairs.
 
 **Note : If there are many points have same distance, this code regards only first two points.**  
+**Note : If there is zero or one point, output file is not created.**
 
 ### Run Time & Comlexity
 
