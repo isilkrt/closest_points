@@ -9,7 +9,7 @@ public class Distance {
 	 * @HasGetter
 	 * @HasSetter
 	 */
-	private float distance;	//distance between two points.
+	private double distance;	//distance between two points.
 
 	/** First point object is regarded
 	 * @HasGetter
@@ -43,17 +43,17 @@ public class Distance {
 	 * @param a
 	 * @param b
 	 */
-	Distance(float distance, Point a, Point b){
+	Distance(double distance, Point a, Point b){
 		this.distance = distance;
 		this.a = a;
 		this.b = b;
 	}
 
-	public float getDistance() {
+	public double getDistance() {
 		return distance;
 	}
 
-	public void setDistance(float distance) {
+	public void setDistance(double distance) {
 		this.distance = distance;
 	}
 
@@ -78,16 +78,16 @@ public class Distance {
 	 * @param b - second point
 	 * @return distance
 	 */
-	public float cal_distance(Point a, Point b){
+	public double cal_distance(Point a, Point b){
 
 		int dim = a.getDimension();	      // dimension of point
-		float distance = 0;	              //keep square of distance between points
+		double distance = 0;	              //keep square of distance between points
 		for(int i = 0; i < dim; i++){
-			float result = Math.abs(a.getCoordinates()[i] - b.getCoordinates()[i]);
+			double result = Math.abs(a.getCoordinates()[i] - b.getCoordinates()[i]);
 			result = result * result;
 			distance = distance + result;
 		}
-		distance = (float) Math.sqrt(distance);
+		distance = (double) Math.sqrt(distance);
 		return distance;
 	}
 
@@ -96,7 +96,7 @@ public class Distance {
 	 * @return Distance object that has smaller distance
 	 */
 	public Distance distance_min_distance(Distance a){
-		float min = Math.min(a.getDistance(), this.getDistance());	//min distance
+		double min = Math.min(a.getDistance(), this.getDistance());	//min distance
 		if(min == a.getDistance()){
 			return a;
 		}else{

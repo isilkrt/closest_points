@@ -9,7 +9,7 @@ import java.text.NumberFormat;
 /**
  * Point.java
  */
-public class Point /*implements Comparable<Point>*/{
+public class Point /*implementsa Comparable<Point>*/{
 
 	/**Keep order of point in point list.
 	 * @HasGetter
@@ -25,7 +25,7 @@ public class Point /*implements Comparable<Point>*/{
 
 	/**List to keep coordinates of points
 	 */
-	private Float[] coordinates;
+	private Double[] coordinates;
 
 	/**
 	 * Class constructor.
@@ -38,7 +38,7 @@ public class Point /*implements Comparable<Point>*/{
 	 * @param dimension - point dimension
 	 * @param coordinates - keep values of axes
 	 */
-	Point(int order, int dimension, Float[] coordinates){
+	Point(int order, int dimension, Double[] coordinates){
 		this.order = order;
 		this.dimension = dimension;
 		this.coordinates = coordinates;
@@ -52,11 +52,11 @@ public class Point /*implements Comparable<Point>*/{
 		this.order = order;
 	}
 
-	public Float[] getCoordinates() {
+	public Double[] getCoordinates() {
 		return coordinates;
 	}
 
-	public void setCoordinates(Float[] coordinates) {
+	public void setCoordinates(Double[] coordinates) {
 		this.coordinates = coordinates;
 	}
 
