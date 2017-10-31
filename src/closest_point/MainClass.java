@@ -262,6 +262,7 @@ public class MainClass {
 		if(finald==null){
 			System.out.println("There are not enough point. Zero or one.");
 		}else{
+			DecimalFormat df = new DecimalFormat("#"); 
 			df.setMaximumIntegerDigits(6);
 			df.setMinimumIntegerDigits(1);
 			df.setMaximumFractionDigits(1);
