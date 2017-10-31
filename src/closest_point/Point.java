@@ -1,67 +1,85 @@
 package closest_point;
 
+import java.util.Formatter;
 import java.util.List;
 
-import java.lang.Comparable;
-public class Point implements Comparable<Point>{
-	
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+/**
+ * Point.java
+ */
+public class Point /*implements Comparable<Point>*/{
+
+	/**Keep order of point in point list.
+	 * @HasGetter
+	 * @HasSetter
+	 */
 	private int order;
+
+	/**Keep dimension of point.
+	 * @HasGetter
+	 * @HasSetter
+	 */
 	private int dimension;
-	private Float[] dimensions;
-	
+
+	/**List to keep coordinates of points
+	 */
+	private Float[] coordinates;
+
+	/**
+	 * Class constructor.
+	 */
+	Point(){
+	}
+
+	/**Class constructor with three parameters.
+	 * @param order - point order in point list
+	 * @param dimension - point dimension
+	 * @param coordinates - keep values of axes
+	 */
+	Point(int order, int dimension, Float[] coordinates){
+		this.order = order;
+		this.dimension = dimension;
+		this.coordinates = coordinates;
+	}
+
 	public int getOrder() {
 		return order;
 	}
+
 	public void setOrder(int order) {
 		this.order = order;
 	}
-	public Float[] getDimensions() {
-		return dimensions;
+
+	public Float[] getCoordinates() {
+		return coordinates;
 	}
-	public void setDimensions(Float[] dimensions) {
-		this.dimensions = dimensions;
+
+	public void setCoordinates(Float[] coordinates) {
+		this.coordinates = coordinates;
 	}
+
 	public int getDimension() {
 		return dimension;
 	}
+
 	public void setDimension(int dimension) {
 		this.dimension = dimension;
 	}
-	public int compareTo(Point p){
 
-		if(this.equals(p)){
-			return 0;
+	/**
+	 * @return String to write points axis values.
+	 */
+	public String print(){
+		DecimalFormat df = new DecimalFormat("#");
+		df.setMaximumIntegerDigits(6);
+		df.setMaximumFractionDigits(1);
+		String write = this.order + ":";
+		for(int i = 0;i<dimension ; i++){
+
+			write = write + df.format(this.coordinates[i]) +"\t";
 		}
-        int number = 0;
-		int lastCmp = this.getDimensions()[number].compareTo(p.getDimensions()[number]);
-		if(lastCmp == 0){
-			for(int i = 0; i<dimension; i++){
-				lastCmp = dimensions[i].compareTo(p.getDimensions()[i]);
-			}
-		}
-        return lastCmp;
+		return write;
 	}
-	
-	public boolean equals(Object o) {
-        if (!(o instanceof Point))
-            return false;
-        Point n = (Point) o;
-
-        for(int i = 0; i<dimension; i++){
-
-        	if(n.getDimensions()[i] != this.getDimensions()[i]){
-        		return false;
-        	}
-        }
-        
-        return true;
-    }
-
-    public int hashCode() {
-        return this.order;
-    }
-
-    public String toString() {
-    	return Integer.toString(order);
-    }
 }
