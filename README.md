@@ -63,7 +63,6 @@ Or in eclipse, write file name to arguments and run.
 
 [Link 1](https://www.google.com.tr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=8&cad=rja&uact=8&ved=0ahUKEwjDlYX4qZnXAhWhNJoKHe2oAWgQFghbMAc&url=http%3A%2F%2Fcs.iupui.edu%2F~xkzou%2Fteaching%2FCS580%2FDivide-and-conquer-closestPair.ppt&usg=AOvVaw1ganNQ0oWoUJzvQHwVBsQi)  
 
-
 [Link 2](https://www.cs.ucsb.edu/~suri/cs235/ClosestPair.pdf)
 
 [Link 3](https://en.wikipedia.org/index.php?q=aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRGl2aWRlX2FuZF9jb25xdWVyXyhhbGdvcml0aG0p)
